@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DEEPSEEK CHAT</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body Styling with Background Image */
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(rgba(5, 68, 161, 0.103), rgba(5, 73, 209, 0.011)), 
+                        url('https://png.pngtree.com/thumb_back/fh260/background/20210430/pngtree-abstract-fluid-geometric-backround-colorful-wavy-shape-composition-blue-and-purple-image_683544.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #2d3748;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Chat Container */
+        #chat-container {
+            width: 100%;
+            max-width: 800px;
+            height: 80vh;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border: 1px solid rgba(226, 232, 240, 0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        /* Header Styling */
+        .header {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            color: #fff;
+            padding: 20px 25px;
+            text-align: center;
+            font-size: 1.4rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .header::before {
+            content: "🤖";
+            font-size: 1.6rem;
+        }
+
+        /* Chat Display Area */
+        #chat {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background-color: rgba(248, 250, 252, 0.7);
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        /* Message Styling */
+        .message {
+            max-width: 80%;
+            padding: 14px 18px;
+            border-radius: 14px;
+            line-height: 1.6;
+            position: relative;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+            animation: fadeIn 0.3s ease-out;
+            font-size: 1.05rem;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .user {
+            align-self: flex-end;
+            background-color: #4f46e5;
+            color: white;
+            border-bottom-right-radius: 6px;
+        }
+
+        .user::before {
+            content: "👤";
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        .bot {
+            align-self: flex-start;
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #2d3748;
+            border: 1px solid rgba(226, 232, 240, 0.7);
+            border-bottom-left-radius: 6px;
+        }
+
+        .bot::before {
+            content: "🤖";
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        /* Timestamp */
+        .timestamp {
+            display: block;
+            font-size: 0.8rem;
+            opacity: 0.7;
+            margin-top: 6px;
+            text-align: right;
+        }
+
+        /* Input Form Styling */
+        form {
+            display: flex;
+            padding: 16px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-top: 1px solid rgba(226, 232, 240, 0.7);
+            gap: 12px;
+        }
+
+        .input-container {
+            flex: 1;
+            display: flex;
+            border: 1px solid rgba(226, 232, 240, 0.7);
+            border-radius: 14px;
+            overflow: hidden;
+            background-color: rgba(248, 250, 252, 0.8);
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 14px 18px;
+            border: none;
+            background: transparent;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.1rem;
+            color: #2d3748;
+        }
+
+        input[type="text"]::placeholder {
+            color: #94a3b8;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+        }
+
+        button {
+            padding: 14px 22px;
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            color: #fff;
+            border: none;
+            border-radius: 14px;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.2s ease;
+        }
+
+        button::after {
+            content: "↑";
+            font-size: 1.2rem;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+        }
+
+        /* Footer Links */
+        .footer-links {
+            margin-top: 28px;
+            text-align: center;
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            color: #4f46e5;
+            font-weight: 500;
+            padding: 10px 18px;
+            border-radius: 10px;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.1rem;
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(226, 232, 240, 0.5);
+        }
+
+        .footer-links a:hover {
+            background-color: rgba(241, 245, 249, 0.9);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer-links a::before {
+            font-size: 1.2rem;
+        }
+
+        .footer-links a:nth-child(1)::before {
+            content: "📋";
+        }
+
+        .footer-links a:nth-child(2)::before {
+            content: "🚪";
+        }
+
+        /* Scrollbar styling */
+        #chat::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        #chat::-webkit-scrollbar-track {
+            background: rgba(241, 245, 249, 0.5);
+        }
+
+        #chat::-webkit-scrollbar-thumb {
+            background-color: rgba(199, 210, 254, 0.7);
+            border-radius: 6px;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            #chat-container {
+                height: 90vh;
+                border-radius: 14px;
+            }
+            
+            .message {
+                max-width: 90%;
+                font-size: 1rem;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 14px;
+                width: 100%;
+            }
+
+            .footer-links a {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Chat Container -->
+    <div id="chat-container">
+        <!-- Header -->
+        <div class="header">Customer Chat - Welcome {{ username }}</div>
+
+        <!-- Chat Display Area -->
+        <div id="chat">
+            {% for message in messages %}
+                <div class="message {{ message.sender }}">
+                    <strong>{{ message.sender|upper }}:</strong> {{ message.text }}
+                    <span class="timestamp">{{ message.timestamp.strftime('%H:%M') if message.timestamp else '' }}</span>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Input Form -->
+        <form method="POST">
+            <div class="input-container">
+                <input type="text" name="message" placeholder="Ask me anything..." required>
+            </div>
+            <button type="submit">Send</button>
+        </form>
+    </div>
+
+    <!-- Footer Links -->
+    <div class="footer-links">
+        <a href="{{ url_for('conversations') }}">View All Conversations</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </div>
+</body>
+</html>

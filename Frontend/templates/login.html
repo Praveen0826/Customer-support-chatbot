@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ELIXIR | PREMIUM LOGIN</title>
+    <style>
+        :root {
+            --gold: #D4AF37;
+            --navy: #0A1A2F;
+            --cream: #F5F5F0;
+            --ruby: #9B111E;
+            --slate: #708090;
+            --ivory: #FFFFF0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Times New Roman", Times, serif;
+        }
+
+        body {
+            background: url('https://images.unsplash.com/photo-1635070041078-e363dbe005cb') no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            color: var(--ivory);
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 26, 47, 0.85);
+        }
+
+        .login-container {
+            background: rgba(245, 245, 240, 0.15);
+            padding: 50px;
+            border-radius: 5px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 450px;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            position: relative;
+            z-index: 1;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--gold);
+            margin-bottom: 40px;
+            font-size: 2.2em;
+            font-weight: normal;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--gold);
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+            padding: 15px;
+            background: rgba(245, 245, 240, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.5);
+            border-radius: 0;
+            font-size: 16px;
+            color: var(--ivory);
+            transition: all 0.3s ease;
+        }
+
+        input::placeholder {
+            color: var(--slate);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 12px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--gold);
+            background: rgba(245, 245, 240, 0.2);
+        }
+
+        button {
+            padding: 16px;
+            background-color: var(--ruby);
+            color: var(--ivory);
+            border: none;
+            border-radius: 0;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        button:hover {
+            background-color: var(--gold);
+            color: var(--navy);
+        }
+
+        .links {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        a {
+            color: var(--gold);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        a:hover {
+            color: var(--ivory);
+        }
+
+        a::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 1px;
+            bottom: -2px;
+            left: 0;
+            background-color: var(--gold);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        a:hover::after {
+            transform: scaleX(1);
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 24px;
+            color: var(--gold);
+            letter-spacing: 3px;
+        }
+
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 30px 20px;
+                margin: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo">ELIXIR AI</div>
+        <h1>Member Login</h1>
+        <form method="POST">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" placeholder="Enter your username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            </div>
+            <button type="submit">Login</button>
+        </form>
+        <div class="links">
+            <a href="{{ url_for('home') }}">Back to Home</a>
+            <a href="{{ url_for('signup') }}">Create Account</a>
+        </div>
+    </div>
+</body>
+</html>

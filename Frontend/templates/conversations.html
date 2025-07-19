@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversations</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            margin: 0;
+            padding: 30px;
+            background-image: url('https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #333;
+        }
+        h1 {
+            font-family: 'Times New Roman', Times, serif;
+            color: #ffffff;
+            text-align: center;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
+            font-size: 32px;
+            letter-spacing: 2px;
+        }
+        .conversations-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .conversation-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-left: 5px solid;
+        }
+        .conversation-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+        }
+        .user-card {
+            border-left-color: #ff9f1c; /* Bright orange for user */
+        }
+        .bot-card {
+            border-left-color: #00d4ff; /* Bright cyan for bot */
+        }
+        .sender {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .user .sender {
+            color: #ff9f1c;
+        }
+        .bot .sender {
+            color: #00d4ff;
+        }
+        .message {
+            font-size: 18px;
+            color: #2d3436;
+            line-height: 1.5;
+        }
+        .links {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .links a {
+            font-family: 'Times New Roman', Times, serif;
+            display: inline-block;
+            padding: 12px 25px;
+            margin: 0 15px;
+            text-decoration: none;
+            border-radius: 25px;
+            font-size: 18px;
+            transition: all 0.3s;
+            background: linear-gradient(45deg, #ff6b6b, #ff8e53);
+            color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .links a:hover {
+            background: linear-gradient(45deg, #ff8e53, #ff6b6b);
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <h1>All Conversations for {{ username }}</h1>
+    <div class="conversations-container">
+        {% for sender, message in conversations %}
+            <div class="conversation-card {{ sender }}-card">
+                <div class="sender">{{ sender.capitalize() }}:</div>
+                <div class="message">{{ message }}</div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="links">
+        <a href="{{ url_for('chatbot') }}">Back to Chatbot</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </div>
+</body>
+</html>
