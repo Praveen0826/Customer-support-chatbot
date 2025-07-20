@@ -630,7 +630,7 @@ def setup():
         flash('Setup complete!', 'success')
         return redirect(url_for('chatbot'))
     
-    return render_template('setup.html')
+    return render_template('chatbot.html')
 
 # Chatbot route
 @app.route('/chatbot', methods=['GET', 'POST'])
